@@ -14,7 +14,9 @@ The aim of this project is to create a text-based command line project managemen
 - Ongoing - The user is at any point between Pending and Complete. The job is not yet finished, but it has started and is being done by the user.
 - Complete - The job has been finished.
 
+## Libraries Used
 
+- Pandas for manipulating spreadsheets
 
 
 ## Acknowledgements
