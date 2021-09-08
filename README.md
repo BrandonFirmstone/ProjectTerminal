@@ -29,3 +29,8 @@ The aim of this project is to create a text-based command line project managemen
 
 - https://www.w3schools.com/python/pandas/default.asp
 
+- https://www.w3schools.com/python/python_classes.asp
+
+- https://realpython.com/python-pep8/#naming-conventions - Naming conventions used
+
+- https://stackoverflow.com/questions/2084508/clear-terminal-in-python
