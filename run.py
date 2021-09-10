@@ -1,17 +1,20 @@
 import pandas as pd
 import datetime
+from csv import writer
 
 all_jobs = pd.read_csv("jobs.csv")
 
 class Jobs:
 
     def print_all_jobs():
+        all_jobs = pd.read_csv("jobs.csv")
         print(all_jobs.to_string())
         print("Type anything to return to main menu")
         user_selection = input()
         main_menu()
 
-    def print_specific_jobs(category):
+    def print_specific_jobs(self,category):
+        all_jobs = pd.read_csv("jobs.csv")
         if category == "Pending" or category == "Ongoing" or category == "Complete":
             pending_tasks = all_jobs[all_jobs['Job Status'].str.match(category)]
             print(pending_tasks.to_string())
@@ -24,6 +27,7 @@ class Jobs:
                 main_menu()
 
     def create_new_job():
+        all_jobs = pd.read_csv("jobs.csv")
         new_job = []
         print("First, please enter the initial status.")
         print("Choose from Pending, Ongoing or Complete.\n")
@@ -72,11 +76,14 @@ class Jobs:
         print("Is this correct? Please type Y for yes or N for no.\n")
         user_selection = input().capitalize()
         if user_selection == "Y":
-
-            #all_jobs.to_csv('jobs.csv', mode="a", index="False", header="False")
+            with open("jobs.csv", 'a+', newline='') as write_obj:
+                csv_writer = writer(write_obj)
+                csv_writer.writerow(new_job)
             print("Successfully added to Jobs")
+            main_menu()
         else:
             Jobs.create_new_job()
+
 
 def status_selector():
     print("Please select one of the following: \n")
@@ -86,7 +93,9 @@ def status_selector():
     status_selection = int(status_selection) - 1
     Jobs.print_specific_jobs(options[status_selection])           
 
+
 def main_menu():
+    all_jobs = pd.read_csv("jobs.csv")
     print(chr(27) + "[2J")
     print("         M A I N   M E N U         ")
     print("-----------------------------------")
@@ -101,6 +110,7 @@ def main_menu():
         Jobs.print_all_jobs()
     elif user_selection == 4 or user_selection == "4":
         Jobs.create_new_job()
+
 
 main_menu()
 Jobs.print_all_jobs()
