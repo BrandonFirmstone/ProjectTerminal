@@ -34,3 +34,5 @@ The aim of this project is to create a text-based command line project managemen
 - https://realpython.com/python-pep8/#naming-conventions - Naming conventions used
 
 - https://stackoverflow.com/questions/2084508/clear-terminal-in-python
+
+- https://www.statology.org/pandas-to-csv-append/ 
