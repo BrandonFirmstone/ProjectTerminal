@@ -1,4 +1,6 @@
 import pandas as pd
+import datetime
+
 all_jobs = pd.read_csv("jobs.csv")
 class Jobs:
 
@@ -19,7 +21,57 @@ class Jobs:
                 status_selector()
             else:
                 main_menu()
-        
+
+    def create_new_job():
+        new_job = []
+        print("First, please enter the initial status.")
+        print("Choose from Pending, Ongoing or Complete.\n")
+        user_selection = input().capitalize()
+        if user_selection == "Pending" or user_selection == "Ongoing" or user_selection == "Complete":
+            new_job.append(user_selection)
+        else:
+            print("Error - unexpected input. You entered " + user_selection + ". Please try again.")
+            Jobs.create_new_job()
+        print("Please give the job a description.\n Please keep the description short, as it may cause errors displaying it.\n")
+        user_selection = input()
+        print("You have typed " + user_selection + ".\n Is this correct? Type Y for yes, N for no.\n")
+        user_confirmation = input().capitalize()
+        if user_confirmation == "Y":
+            new_job.append(user_selection)
+        else:
+            Jobs.create_new_job()
+        print("Please choose a priority. Please choose from Low, Medium or High.\n")
+        user_selection = input().capitalize()
+        if user_selection == "Low" or user_selection == "Medium" or user_selection == "High":
+            new_job.append(user_selection)
+        else:
+            Jobs.create_new_job()
+        print("Select a due date. This should be formatted like DD/MM/YYYY.")
+        user_selection = input()
+        check_date = list(user_selection.split())
+        print(check_date)
+        now = datetime.datetime.now()
+        check_year = int(str(check_date[6]) + str(check_date[7]) + str(check_date[8]) + str(check_date[9]))
+        check_month = int(str(check_date[3]) + str(check_date[4]))
+        if user_selection[0] >= "4":
+            print("Date is invalid. Please try again.")
+        elif user_selection[2] != "/" or user_selection[5] != "/":
+            print("Date is invalid. Please try again.")
+        elif user_selection[0] == "3" and user_selection[1] >= "1":
+            print("Day in date is greater than 31. Please try again.")
+        elif check_year < now.year() or (check_month < now.month() and check_year == now.year):
+            print("Date is in the past.")
+        else:
+            new_job.append(user_selection)
+        print(*new_job)
+        print("Is this correct? Please type Y for yes or N for no.\n")
+        user_selection = input().capitalize()
+        if user_selection == "Y":
+            new_job.to_csv('jobs.csv', mode="a", index="False", header="False")
+            print("Successfully added to Jobs")
+        else:
+            Jobs.create_new_job()
+
 def status_selector():
     print("Please select one of the following: \n")
     print("Pending(1)   Ongoing(2)   Complete(3) \n")
