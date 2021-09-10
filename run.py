@@ -2,6 +2,7 @@ import pandas as pd
 import datetime
 
 all_jobs = pd.read_csv("jobs.csv")
+
 class Jobs:
 
     def print_all_jobs():
@@ -48,18 +49,22 @@ class Jobs:
             Jobs.create_new_job()
         print("Select a due date. This should be formatted like DD/MM/YYYY.")
         user_selection = input()
-        check_date = list(user_selection.split())
-        print(check_date)
         now = datetime.datetime.now()
-        check_year = int(str(check_date[6]) + str(check_date[7]) + str(check_date[8]) + str(check_date[9]))
-        check_month = int(str(check_date[3]) + str(check_date[4]))
+        check_year = int(str(user_selection[6] + user_selection[7] + user_selection[8] + user_selection[9]))
+        check_month = int(str(user_selection[3] + user_selection[4]))
+        current_month = now.month
+        current_year = now.year
+        print(check_year)
+        print(check_month)
+        print(now.year)
+        print(now.month)
         if user_selection[0] >= "4":
             print("Date is invalid. Please try again.")
         elif user_selection[2] != "/" or user_selection[5] != "/":
             print("Date is invalid. Please try again.")
         elif user_selection[0] == "3" and user_selection[1] >= "1":
             print("Day in date is greater than 31. Please try again.")
-        elif check_year < now.year() or (check_month < now.month() and check_year == now.year):
+        elif check_year < current_year or (check_month < current_month and check_year == current_year):
             print("Date is in the past.")
         else:
             new_job.append(user_selection)
@@ -67,7 +72,8 @@ class Jobs:
         print("Is this correct? Please type Y for yes or N for no.\n")
         user_selection = input().capitalize()
         if user_selection == "Y":
-            new_job.to_csv('jobs.csv', mode="a", index="False", header="False")
+
+            #all_jobs.to_csv('jobs.csv', mode="a", index="False", header="False")
             print("Successfully added to Jobs")
         else:
             Jobs.create_new_job()
