@@ -141,7 +141,55 @@ class Jobs:
                 print("Failed to delete row. Press enter to go to main menu")
                 user_selection = input()
                 main_menu()
-                
+    
+
+    def update_status():
+
+
+        all_jobs = pd.read_csv("jobs.csv")
+        print("Showing Pending and Ongoing tasks. Please note once a Job has gone to Complete it cannot be changed.\n")
+        print("Press enter to continue...\n")
+        user_selection = input()
+        not_completed_jobs = all_jobs[(all_jobs['Job Status'] == 'Pending') + (all_jobs['Job Status'] == 'Ongoing')]
+        print(not_completed_jobs)
+        print("Press enter to continue...\n")
+        user_selection = input()
+        print("Please select a job you would like to update by using the index on the far left of each row.")
+        user_selection = input()
+        index_selected = int(user_selection)
+        if (all_jobs.index == user_selection).any() is False:
+            print("Please select a valid index.")
+            Jobs.update_status()
+        else:
+            print(all_jobs.loc[[index_selected]])
+            print("Is this the job you would like to update? Type Y for yes, N for No")
+            user_selection = input().capitalize()
+            if user_selection == "Y":
+                print("Y accepted")
+                row_to_update = all_jobs.iloc[[index_selected]]
+                print(all_jobs[index_selected].loc[all_jobs["Job Status"] == "Pending"])
+                while True:
+                    if (row_to_update['Job Status'] == 'Pending').any() is True: 
+                        print("Would you like to update from Pending to Ongoing or Complete?\n")
+                        user_selection = input().capitalize()
+                        while True:
+                            if user_selection == "Pending" or user_selection == "Ongoing":
+                                print(f"Updating to {user_selection}...")
+                                all_jobs.set_value(index_selected, "Job Status", user_selection)
+                                all_jobs.to_csv("jobs.csv", index=False)
+                                print("Changes made successfully")
+                                break
+                            else:
+                                print("Error, unexpected input. Please try again")
+                        break
+                    else:
+                        print("Please try again.")
+                        Jobs.update_status()
+            else:
+                print("An exception has occurred")
+                Jobs.update_status()
+        main_menu()
+
 
 def status_selector():
 
@@ -182,6 +230,7 @@ def main_menu():
     print(" Type the number next to each option \n in order to select it. \n \n")
     print(" Help(1)  Search by Status(2)    See all Jobs(3)")
     print(" Add a new Job(4)   View Jobs Due Today(5)    Delete a specific job(6)")
+    print(" Update a job's Status(7)")
     print(" To exit the program, simply type 'exit'")
     user_selection = input("Select your option: \n \n")
 
@@ -197,6 +246,8 @@ def main_menu():
         Jobs.view_due_jobs()
     elif user_selection == 6 or user_selection == "6":
         Jobs.delete_specific_job()
+    elif user_selection == 7 or user_selection == "7":
+        Jobs.update_status()
     elif user_selection == "exit":
         print("Are you sure? Type 1 to return to the main menu, 2 to exit the program.")
         user_selection = input()
