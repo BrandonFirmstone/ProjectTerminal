@@ -8,14 +8,20 @@ all_jobs = pd.read_csv("jobs.csv")
 
 class Jobs:
 
+
     def print_all_jobs():
+
+
         all_jobs = pd.read_csv("jobs.csv")
         print(all_jobs.to_string())
         print(" Type anything to return to main menu")
         user_selection = input()
         main_menu()
 
+
     def print_specific_jobs(self,category):
+
+
         all_jobs = pd.read_csv("jobs.csv")
         if category == "Pending" or category == "Ongoing" or category == "Complete":
             specified_tasks = all_jobs[all_jobs['Job Status'].str.match(category)]
@@ -28,7 +34,10 @@ class Jobs:
             else:
                 main_menu()
 
+
     def create_new_job():
+
+
         all_jobs = pd.read_csv("jobs.csv")
         new_job = []
         print(" First, please enter the initial status.")
@@ -86,10 +95,10 @@ class Jobs:
         else:
             Jobs.create_new_job()
         
-
-        subsetDataFrame = dfObj[dfObj['Product'] == 'Apples']
         
     def view_due_jobs():
+
+
         all_jobs = pd.read_csv("jobs.csv")
         now = datetime.datetime.now()
         date_formatted = now.strftime("%d/%m/%Y")
@@ -101,7 +110,10 @@ class Jobs:
         user_selection = input()
         main_menu()
     
+
     def delete_specific_job():
+
+
         all_jobs = pd.read_csv("jobs.csv")
         print(" Please see all jobs below:")
         print(all_jobs.to_string())
@@ -132,6 +144,8 @@ class Jobs:
                 
 
 def status_selector():
+
+
     print(" Please select one of the following: \n")
     print(" Pending(1)   Ongoing(2)   Complete(3) \n")
     status_selection = input()
@@ -141,6 +155,8 @@ def status_selector():
 
 
 def help_function():
+
+
     print(chr(27) + "[2J")
     print("              H E L P              ")
     print("-----------------------------------")
@@ -156,6 +172,8 @@ def help_function():
     main_menu()
 
 def main_menu():
+
+
     all_jobs = pd.read_csv("jobs.csv")
     print(chr(27) + "[2J")
     print("   P R O J E C T  T E R M I N A L  \n")
@@ -191,6 +209,8 @@ def main_menu():
             print("Unexpected input, returning to main menu.")
             main_menu()
 
+
 while True:
     main_menu()
+
 
