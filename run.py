@@ -95,11 +95,41 @@ class Jobs:
         date_formatted = now.strftime("%d/%m/%Y")
         pending_jobs = all_jobs[((all_jobs['Job Status'] == 'Pending') & (all_jobs['Job Status'] == 'Ongoing')) & (all_jobs['Due Date'] == date_formatted)]
         specified_tasks = all_jobs[all_jobs['Due Date'].str.match(date_formatted)]
-        print("Tasks due today \n")
+        print(" Tasks due today \n")
         print(f"{Fore.RED}{specified_tasks} \033[39m \n")
-        print("Press enter to continue")
+        print(" Press enter to continue")
         user_selection = input()
         main_menu()
+    
+    def delete_specific_job():
+        all_jobs = pd.read_csv("jobs.csv")
+        print(" Please see all jobs below:")
+        print(all_jobs.to_string())
+        print("\n Please select the row you want to delete using the number to the far left of the row.\n")
+        user_selection = input()
+        index_selected = int(user_selection)
+        if (all_jobs.index == user_selection).any() is False:
+            print(" Please select a valid index.")
+            main_menu()
+        else:
+            print(all_jobs.iloc[[index_selected]])
+            print(" Is this the row that you would like to delete?\n Type Y for Yes, N for No.")
+            user_selection = input().capitalize()
+            if user_selection == "Y":
+                print(" Deleting row...")
+                new_data = all_jobs.drop(index_selected)
+                new_data.to_csv("jobs.csv", index=False)
+                print(" Deleted row successfully")
+                all_jobs = pd.read_csv("jobs.csv")
+                print(all_jobs.to_string())
+                print("Press enter to continue")
+                user_selection = input()
+                main_menu()
+            else:
+                print("Failed to delete row. Press enter to go to main menu")
+                user_selection = input()
+                main_menu()
+                
 
 def status_selector():
     print(" Please select one of the following: \n")
@@ -133,7 +163,7 @@ def main_menu():
     print("-----------------------------------")
     print(" Type the number next to each option \n in order to select it. \n \n")
     print(" Help(1)  Search by Status(2)    See all Jobs(3)")
-    print(" Add a new Job (4)   View Jobs Due Today (5)")
+    print(" Add a new Job(4)   View Jobs Due Today(5)    Delete a specific job(6)")
     print(" To exit the program, simply type 'exit'")
     user_selection = input("Select your option: \n \n")
 
@@ -147,6 +177,8 @@ def main_menu():
         Jobs.create_new_job()
     elif user_selection == 5 or user_selection == "5":
         Jobs.view_due_jobs()
+    elif user_selection == 6 or user_selection == "6":
+        Jobs.delete_specific_job()
     elif user_selection == "exit":
         print("Are you sure? Type 1 to return to the main menu, 2 to exit the program.")
         user_selection = input()
