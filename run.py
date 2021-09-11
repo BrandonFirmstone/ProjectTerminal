@@ -85,13 +85,27 @@ class Jobs:
             main_menu()
         else:
             Jobs.create_new_job()
+        
 
+        subsetDataFrame = dfObj[dfObj['Product'] == 'Apples']
+        
+    def view_due_jobs():
+        all_jobs = pd.read_csv("jobs.csv")
+        now = datetime.datetime.now()
+        date_formatted = now.strftime("%d/%m/%Y")
+        pending_jobs = all_jobs[((all_jobs['Job Status'] == 'Pending') & (all_jobs['Job Status'] == 'Ongoing')) & (all_jobs['Due Date'] == date_formatted)]
+        specified_tasks = all_jobs[all_jobs['Due Date'].str.match(date_formatted)]
+        print("Tasks due today \n")
+        print(f"{Fore.RED}{specified_tasks} \033[39m \n")
+        print("Press enter to continue")
+        user_selection = input()
+        main_menu()
 
 def status_selector():
     print(" Please select one of the following: \n")
     print(" Pending(1)   Ongoing(2)   Complete(3) \n")
     status_selection = input()
-    options = ["Pending","Ongoing","Complete"]
+    options = ["Pending", "Ongoing", "Complete"]
     status_selection = int(status_selection) - 1
     Jobs.print_specific_jobs(options[status_selection])
 
@@ -118,7 +132,8 @@ def main_menu():
     print("         M A I N   M E N U         ")
     print("-----------------------------------")
     print(" Type the number next to each option \n in order to select it. \n \n")
-    print(" Help(1)  Search by Status(2)    See all Jobs(3)    Add a new Job(4)")
+    print(" Help(1)  Search by Status(2)    See all Jobs(3)")
+    print(" Add a new Job (4)   View Jobs Due Today (5)")
     print(" To exit the program, simply type 'exit'")
     user_selection = input("Select your option: \n \n")
 
@@ -130,6 +145,8 @@ def main_menu():
         Jobs.print_all_jobs()
     elif user_selection == 4 or user_selection == "4":
         Jobs.create_new_job()
+    elif user_selection == 5 or user_selection == "5":
+        Jobs.view_due_jobs()
     elif user_selection == "exit":
         print("Are you sure? Type 1 to return to the main menu, 2 to exit the program.")
         user_selection = input()
