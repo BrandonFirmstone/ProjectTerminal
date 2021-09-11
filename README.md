@@ -36,3 +36,7 @@ The aim of this project is to create a text-based command line project managemen
 - https://stackoverflow.com/questions/2084508/clear-terminal-in-python
 
 - https://www.statology.org/pandas-to-csv-append/ 
+
+- https://kanoki.org/2019/01/02/pandas-trick-for-the-day-color-code-columns-rows-cells-of-dataframe/
+
+- https://thispointer.com/python-pandas-select-rows-in-dataframe-by-conditions-on-multiple-columns/
