@@ -1,16 +1,26 @@
 import pandas as pd
-import datetime, sys
+import datetime
+import sys
 from colorama import Fore
 from csv import writer
 
 all_jobs = pd.read_csv("jobs.csv")
+STATUSES = {
+    "1": "Pending",
+    "2": "Ongoing",
+    "3": "Complete"
+}
+
+PRIORITIES = {
+    "1": "Low",
+    "2": "Medium",
+    "3": "High"
+}
 
 
 class Jobs:
 
-
-    def print_all_jobs():
-
+    def print_all_jobs(self):
 
         all_jobs = pd.read_csv("jobs.csv")
         print(all_jobs.to_string())
@@ -18,13 +28,12 @@ class Jobs:
         user_selection = input()
         main_menu()
 
-
-    def print_specific_jobs(self,category):
-
+    def print_specific_jobs(self, category):
 
         all_jobs = pd.read_csv("jobs.csv")
         if category == "Pending" or category == "Ongoing" or category == "Complete":
-            specified_tasks = all_jobs[all_jobs['Job Status'].str.match(category)]
+            specified_tasks = all_jobs[all_jobs['Job Status'].str.match(
+                category)]
             print(specified_tasks.to_string())
         else:
             print(" Error - Job status entered is unrecognised. \n Would you like to try again(1) or return to the main menu?(2)\n")
@@ -34,34 +43,47 @@ class Jobs:
             else:
                 main_menu()
 
-
-    def create_new_job():
-
+    def create_new_job(self):
 
         all_jobs = pd.read_csv("jobs.csv")
         new_job = []
         print(" First, please enter the initial status.")
-        print(" Choose from Pending, Ongoing or Complete.\n")
-        user_selection = input().capitalize()
-        if user_selection == "Pending" or user_selection == "Ongoing" or user_selection == "Complete":
+        user_selection = None
+        while user_selection not in STATUSES:
+            for key in STATUSES:
+                print(key, ' - ', STATUSES[key])
+            user_selection = input(
+                "What status would you like to select?\n").strip()
+        new_job.append(STATUSES[user_selection])
+        user_selection = None
+        while user_selection is None:
+            user_selection = input(
+                " Please enter a description. 30 Characters or less.\n").strip().capitalize()
+            if len(user_selection) < 4 and len(user_selection) > 50:
+                print("Please type a valid description")
+                user_selection = None
             new_job.append(user_selection)
-        else:
-            print(" Error - unexpected input. You entered " + user_selection + ". Please try again.")
-            Jobs.create_new_job()
-        print(" Please give the job a description.\n Please keep the description short, as it may cause errors displaying it.\n")
-        user_selection = input()
-        print(" You have typed " + user_selection + ".\n Is this correct? Type Y for yes, N for no.\n")
-        user_confirmation = input().capitalize()
-        if user_confirmation == "Y":
-            new_job.append(user_selection)
-        else:
-            Jobs.create_new_job()
-        print(" Please choose a priority. Please choose from Low, Medium or High.\n")
-        user_selection = input().capitalize()
-        if user_selection == "Low" or user_selection == "Medium" or user_selection == "High":
-            new_job.append(user_selection)
-        else:
-            Jobs.create_new_job()
+        user_selection = None
+        while user_selection not in PRIORITIES:
+            for key in PRIORITIES:
+                print(key, "- ", PRIORITIES[key])
+            user_selection = input("Please select a priority.\n").strip()
+        new_job.append(PRIORITIES[user_selection])
+        due_date = None
+        while not due_date:
+            due_date = input(
+                "Please enter a due date in form dd/mm/yyyy:\n").strip()
+            try:
+                dd = datetime.datetime.strptime(due_date, '%d/%m/%Y')
+                if dd.date() < datetime.datetime.now().date():
+                    print("Date cannot be in the past")
+                    due_date = None
+
+            except ValueError:
+                print("Invalid Date Format.")
+                due_date = None
+        new_job.append(due_date)
+        '''
         print(" Select a due date. This should be formatted like DD/MM/YYYY.")
         user_selection = input()
         now = datetime.datetime.now()
@@ -83,6 +105,7 @@ class Jobs:
             print(" Date is in the past.")
         else:
             new_job.append(user_selection)
+        '''
         print(*new_job)
         print(" Is this correct? Please type Y for yes or N for no.\n")
         user_selection = input().capitalize()
@@ -91,28 +114,27 @@ class Jobs:
                 csv_writer = writer(write_obj)
                 csv_writer.writerow(new_job)
             print(" Successfully added to Jobs")
+            user_selection = input("Press enter to continue...\n")
             main_menu()
         else:
             Jobs.create_new_job()
-        
-        
-    def view_due_jobs():
 
+    def view_due_jobs(self):
 
         all_jobs = pd.read_csv("jobs.csv")
         now = datetime.datetime.now()
         date_formatted = now.strftime("%d/%m/%Y")
-        pending_jobs = all_jobs[((all_jobs['Job Status'] == 'Pending') & (all_jobs['Job Status'] == 'Ongoing')) & (all_jobs['Due Date'] == date_formatted)]
-        specified_tasks = all_jobs[all_jobs['Due Date'].str.match(date_formatted)]
+        pending_jobs = all_jobs[((all_jobs['Job Status'] == 'Pending') & (
+            all_jobs['Job Status'] == 'Ongoing')) & (all_jobs['Due Date'] == date_formatted)]
+        specified_tasks = all_jobs[all_jobs['Due Date'].str.match(
+            date_formatted)]
         print(" Tasks due today \n")
         print(f"{Fore.RED}{specified_tasks} \033[39m \n")
         print(" Press enter to continue")
         user_selection = input()
         main_menu()
-    
 
-    def delete_specific_job():
-
+    def delete_specific_job(self):
 
         all_jobs = pd.read_csv("jobs.csv")
         print(" Please see all jobs below:")
@@ -125,7 +147,8 @@ class Jobs:
             main_menu()
         else:
             print(all_jobs.iloc[[index_selected]])
-            print(" Is this the row that you would like to delete?\n Type Y for Yes, N for No.")
+            print(
+                " Is this the row that you would like to delete?\n Type Y for Yes, N for No.")
             user_selection = input().capitalize()
             if user_selection == "Y":
                 print(" Deleting row...")
@@ -141,16 +164,15 @@ class Jobs:
                 print("Failed to delete row. Press enter to go to main menu")
                 user_selection = input()
                 main_menu()
-    
 
-    def update_status():
-
+    def update_status(self):
 
         all_jobs = pd.read_csv("jobs.csv")
         print("Showing Pending and Ongoing tasks. Please note once a Job has gone to Complete it cannot be changed.\n")
         print("Press enter to continue...\n")
         user_selection = input()
-        not_completed_jobs = all_jobs[(all_jobs['Job Status'] == 'Pending') + (all_jobs['Job Status'] == 'Ongoing')]
+        not_completed_jobs = all_jobs[(
+            all_jobs['Job Status'] == 'Pending') + (all_jobs['Job Status'] == 'Ongoing')]
         print(not_completed_jobs)
         print("Press enter to continue...\n")
         user_selection = input()
@@ -167,15 +189,18 @@ class Jobs:
             if user_selection == "Y":
                 print("Y accepted")
                 row_to_update = all_jobs.iloc[[index_selected]]
-                print(all_jobs[index_selected].loc[all_jobs["Job Status"] == "Pending"])
+                print(row_to_update)
+                print()
                 while True:
-                    if (row_to_update['Job Status'] == 'Pending').any() is True: 
-                        print("Would you like to update from Pending to Ongoing or Complete?\n")
+                    if "Pending" in row_to_update.values:
+                        print(
+                            "Would you like to update from Pending to Ongoing or Complete?\n")
                         user_selection = input().capitalize()
                         while True:
-                            if user_selection == "Pending" or user_selection == "Ongoing":
+                            if user_selection == "Ongoing" or user_selection == "Complete":
                                 print(f"Updating to {user_selection}...")
-                                all_jobs.set_value(index_selected, "Job Status", user_selection)
+                                all_jobs.set_value(
+                                    index_selected, "Job Status", user_selection)
                                 all_jobs.to_csv("jobs.csv", index=False)
                                 print("Changes made successfully")
                                 break
@@ -183,16 +208,23 @@ class Jobs:
                                 print("Error, unexpected input. Please try again")
                         break
                     else:
-                        print("Please try again.")
-                        Jobs.update_status()
+                        print("Update status to Complete? Y/N")
+                        user_selection = input()
+                        if user_selection == "Y":
+                            print("Updating to complete..")
+                            all_jobs.set_value(
+                                index_selected, "Job Status", "Complete")
+                            all_jobs.to_csv("jobs.csv", index=False)
+                        else:
+                            print("Cancelling operation")
+                            break
             else:
                 print("An exception has occurred")
-                Jobs.update_status()
+                jobs.update_status()
         main_menu()
 
 
 def status_selector():
-
 
     print(" Please select one of the following: \n")
     print(" Pending(1)   Ongoing(2)   Complete(3) \n")
@@ -203,7 +235,6 @@ def status_selector():
 
 
 def help_function():
-
 
     print(chr(27) + "[2J")
     print("              H E L P              ")
@@ -219,37 +250,45 @@ def help_function():
     user_selection = input()
     main_menu()
 
+
 def main_menu():
-
-
+    MENUS = {
+        "1": "Help",
+        "2": "Search By Status",
+        "3": "See All Jobs",
+        "4": "Add New Job",
+        "5": "View Jobs by Due Date",
+        "6": "Delete a Job",
+        "7": "Update Status",
+        "0": "exit",
+    }
+    jobs = Jobs()
     all_jobs = pd.read_csv("jobs.csv")
     print(chr(27) + "[2J")
     print("   P R O J E C T  T E R M I N A L  \n")
     print("         M A I N   M E N U         ")
     print("-----------------------------------")
-    print(" Type the number next to each option \n in order to select it. \n \n")
-    print(" Help(1)  Search by Status(2)    See all Jobs(3)")
-    print(" Add a new Job(4)   View Jobs Due Today(5)    Delete a specific job(6)")
-    print(" Update a job's Status(7)")
-    print(" To exit the program, simply type 'exit'")
-    user_selection = input("Select your option: \n \n")
-
+    user_selection = None
+    while user_selection not in MENUS:
+        for key in MENUS:
+            print(key, ' - ', MENUS[key])
+        user_selection = input("What would you like to do?\n").strip()
     if user_selection == 1 or user_selection == "1":
         help_function()
     elif user_selection == 2 or user_selection == "2":
         status_selector()
     elif user_selection == 3 or user_selection == "3":
-        Jobs.print_all_jobs()
+        jobs.print_all_jobs()
     elif user_selection == 4 or user_selection == "4":
-        Jobs.create_new_job()
+        jobs.create_new_job()
     elif user_selection == 5 or user_selection == "5":
-        Jobs.view_due_jobs()
+        jobs.view_due_jobs()
     elif user_selection == 6 or user_selection == "6":
-        Jobs.delete_specific_job()
+        jobs.delete_specific_job()
     elif user_selection == 7 or user_selection == "7":
-        Jobs.update_status()
+        jobs.update_status()
     elif user_selection == "exit":
-        print("Are you sure? Type 1 to return to the main menu, 2 to exit the program.")
+        print("Are you sure? Type 1 to return to the main menu, 2 to exit the program.")  # noqa
         user_selection = input()
         if user_selection == "1":
             main_menu()
@@ -263,5 +302,3 @@ def main_menu():
 
 while True:
     main_menu()
-
-
