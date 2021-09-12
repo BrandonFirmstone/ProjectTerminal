@@ -225,13 +225,13 @@ class Jobs:
 
 
 def status_selector():
-
+    jobs = Jobs()
     print(" Please select one of the following: \n")
     print(" Pending(1)   Ongoing(2)   Complete(3) \n")
     status_selection = input()
     options = ["Pending", "Ongoing", "Complete"]
     status_selection = int(status_selection) - 1
-    Jobs.print_specific_jobs(options[status_selection])
+    jobs.print_specific_jobs(options[status_selection])
 
 
 def help_function():
