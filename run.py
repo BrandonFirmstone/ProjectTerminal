@@ -17,8 +17,97 @@ PRIORITIES = {
     "3": "High"
 }
 
+class Job:
+    """
+    A class to help set up task records:
+        Properties:
+            status: Pending - The job has been posted and not started. Ongoing - The job has been started. Complete - The job is finished. 
+            description: String 1 - 30 characters long to prevent wrapping to next line on console
+            priority: Low, Medium or High priority. Helps the use to decide what order to do jobs
+            due_date: The date the task is due, must be in the future or equal to current date
+        Methods:
+            get_status: user input to select status from STATUSES
+            get_description: user input to set description
+            get_priority: user input to select priority from PRIORITIES
+            due_date: user input to get due date in DD/MM/YYYY format
+            __init__: function to either accept incoming values and assign to properites or create new object based on user input
+            __str__: default string display
+            to_array: [place items into an ary based on status, description, priority, due_date]
+    """
+    def __init__(self, status=None, description=None, priority=None, due_date=None):
+        if status and status in STATUSES:
+            self.status = STATUSES[status]
+        else:
+            self.status = self.get_status()
+        if description and len(description) <= 30 and len(description) > 0:
+            self.description = description
+        else:
+            self.description = self.get_description()
+        if priority and priority in PRIORITIES:
+            self.priority = priority
+        else:
+            self.priority = self.get_priority()
+        if due_date:
+            self.due_date = due_date
+        else:
+            self.due_date = self.get_due_date()
 
-class Jobs:
+    def __str__(self):
+        return f"Description: %s\nStatus: %s\nPriority: %s\nDue Date: %s" % (self.description, self.status, self.priority, self.due_date)
+
+    def get_status(self):
+        user_selection = None
+        while user_selection not in STATUSES:
+            for key in STATUSES:
+                print(key, ' - ', STATUSES[key])
+            user_selection = input(
+                "What status would you like to select?\n").strip()
+        return STATUSES[user_selection]
+
+    def get_description(self):
+        user_selection = None
+        while user_selection is None:
+            user_selection = input("Please enter a description. 30 Characters or less.\n").strip().capitalize()
+            if len(user_selection) >= 4 or len(user_selection) <= 50:
+                pass
+            else:
+                print("Please type a valid description")
+                user_selection = None
+        return user_selection
+
+    def get_priority(self):
+        user_selection = None
+        while user_selection not in PRIORITIES:
+            for key in PRIORITIES:
+                print(key, ' - ', PRIORITIES[key])
+            user_selection = input("What is the priority for this job?\n").strip()
+        return PRIORITIES[user_selection]
+
+    def get_due_date(self):
+        due_date = None
+        while not due_date:
+            due_date = input("Please enter a due date in form dd/mm/yyyy:\n").strip()
+            try:
+                dd = datetime.datetime.strptime(due_date, '%d/%m/%Y')
+                if dd.date() < datetime.datetime.now().date():
+                    print("Date cannot be in the past")
+                    due_date = None
+
+            except ValueError:
+                print("Invalid Date Format.")
+                due_date = None
+        return due_date
+
+    def to_array(self):
+        return[self.status, self.description, self.priority, self.due_date]
+
+    def to_csv(self):
+        new_job = self.to_array()
+        with open("jobs.csv", 'a+', newline='') as write_obj:
+                csv_writer = writer(write_obj)
+                csv_writer.writerow(new_job)
+
+class SearchAndDestroy:
 
     def print_all_jobs(self):
 
@@ -42,97 +131,6 @@ class Jobs:
                 status_selector()
             else:
                 main_menu()
-
-    def create_new_job(self):
-
-        all_jobs = pd.read_csv("jobs.csv")
-        new_job = []
-        print(" First, please enter the initial status.")
-        user_selection = None
-        while user_selection not in STATUSES:
-            for key in STATUSES:
-                print(key, ' - ', STATUSES[key])
-            user_selection = input(
-                "What status would you like to select?\n").strip()
-        new_job.append(STATUSES[user_selection])
-        user_selection = None
-        while user_selection is None:
-            user_selection = input(
-                " Please enter a description. 30 Characters or less.\n").strip().capitalize()
-            if len(user_selection) < 4 and len(user_selection) > 50:
-                print("Please type a valid description")
-                user_selection = None
-            new_job.append(user_selection)
-        user_selection = None
-        while user_selection not in PRIORITIES:
-            for key in PRIORITIES:
-                print(key, "- ", PRIORITIES[key])
-            user_selection = input("Please select a priority.\n").strip()
-        new_job.append(PRIORITIES[user_selection])
-        due_date = None
-        while not due_date:
-            due_date = input(
-                "Please enter a due date in form dd/mm/yyyy:\n").strip()
-            try:
-                dd = datetime.datetime.strptime(due_date, '%d/%m/%Y')
-                if dd.date() < datetime.datetime.now().date():
-                    print("Date cannot be in the past")
-                    due_date = None
-
-            except ValueError:
-                print("Invalid Date Format.")
-                due_date = None
-        new_job.append(due_date)
-        '''
-        print(" Select a due date. This should be formatted like DD/MM/YYYY.")
-        user_selection = input()
-        now = datetime.datetime.now()
-        check_year = int(str(user_selection[6] + user_selection[7] + user_selection[8] + user_selection[9]))
-        check_month = int(str(user_selection[3] + user_selection[4]))
-        current_month = now.month
-        current_year = now.year
-        print(check_year)
-        print(check_month)
-        print(now.year)
-        print(now.month)
-        if user_selection[0] >= "4":
-            print(" Date is invalid. Please try again.")
-        elif user_selection[2] != "/" or user_selection[5] != "/":
-            print(" Date is invalid. Please try again.")
-        elif user_selection[0] == "3" and user_selection[1] >= "1":
-            print(" Day in date is greater than 31. Please try again.")
-        elif check_year < current_year or (check_month < current_month and check_year == current_year):
-            print(" Date is in the past.")
-        else:
-            new_job.append(user_selection)
-        '''
-        print(*new_job)
-        print(" Is this correct? Please type Y for yes or N for no.\n")
-        user_selection = input().capitalize()
-        if user_selection == "Y":
-            with open("jobs.csv", 'a+', newline='') as write_obj:
-                csv_writer = writer(write_obj)
-                csv_writer.writerow(new_job)
-            print(" Successfully added to Jobs")
-            user_selection = input("Press enter to continue...\n")
-            main_menu()
-        else:
-            Jobs.create_new_job()
-
-    def view_due_jobs(self):
-
-        all_jobs = pd.read_csv("jobs.csv")
-        now = datetime.datetime.now()
-        date_formatted = now.strftime("%d/%m/%Y")
-        pending_jobs = all_jobs[((all_jobs['Job Status'] == 'Pending') & (
-            all_jobs['Job Status'] == 'Ongoing')) & (all_jobs['Due Date'] == date_formatted)]
-        specified_tasks = all_jobs[all_jobs['Due Date'].str.match(
-            date_formatted)]
-        print(" Tasks due today \n")
-        print(f"{Fore.RED}{specified_tasks} \033[39m \n")
-        print(" Press enter to continue")
-        user_selection = input()
-        main_menu()
 
     def delete_specific_job(self):
 
