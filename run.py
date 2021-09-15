@@ -254,7 +254,6 @@ def main_menu():
     if user_selection == 1 or user_selection == "1":
         help_function()
     elif user_selection == 2 or user_selection == "2":
-        
         print_specific_jobs()
     elif user_selection == 3 or user_selection == "3":
         print_all_jobs()
