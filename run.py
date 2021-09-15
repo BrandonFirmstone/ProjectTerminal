@@ -17,6 +17,12 @@ PRIORITIES = {
     "3": "High"
 }
 
+OPTIONS = {
+            "1": "Yes",
+            "2": "No"
+}
+
+
 class Job:
     """
     A class to help set up task records:
@@ -113,9 +119,7 @@ class SearchAndDestroy:
 
         all_jobs = pd.read_csv("jobs.csv")
         print(all_jobs.to_string())
-        print(" Type anything to return to main menu")
-        user_selection = input()
-        main_menu()
+        return_to_menu()
 
     def print_specific_jobs(self, category):
 
@@ -125,12 +129,12 @@ class SearchAndDestroy:
                 category)]
             print(specified_tasks.to_string())
         else:
-            print(" Error - Job status entered is unrecognised. \n Would you like to try again(1) or return to the main menu?(2)\n")
-            user_selection = input()
-            if user_selection == 1 or user_selection == "1":
+            print(" Error - Job status entered is unrecognised. \n Would you like to try again?\n")
+            user_selection = yes_no_questions()
+            if user_selection == "Yes":
                 status_selector()
             else:
-                main_menu()
+                return_to_menu()
 
     def delete_specific_job(self):
 
@@ -146,22 +150,19 @@ class SearchAndDestroy:
         else:
             print(all_jobs.iloc[[index_selected]])
             print(
-                " Is this the row that you would like to delete?\n Type Y for Yes, N for No.")
-            user_selection = input().capitalize()
-            if user_selection == "Y":
+                " Is this the row that you would like to delete?\n)
+            user_selection = yes_no_questions()
+            if user_selection == "Yes":
                 print(" Deleting row...")
                 new_data = all_jobs.drop(index_selected)
                 new_data.to_csv("jobs.csv", index=False)
                 print(" Deleted row successfully")
                 all_jobs = pd.read_csv("jobs.csv")
                 print(all_jobs.to_string())
-                print("Press enter to continue")
-                user_selection = input()
-                main_menu()
+                return_to_menu()
             else:
-                print("Failed to delete row. Press enter to go to main menu")
-                user_selection = input()
-                main_menu()
+                print("Failed to delete row.")
+                return_to_menu()
 
     def update_status(self):
 
@@ -182,10 +183,9 @@ class SearchAndDestroy:
             Jobs.update_status()
         else:
             print(all_jobs.loc[[index_selected]])
-            print("Is this the job you would like to update? Type Y for yes, N for No")
-            user_selection = input().capitalize()
-            if user_selection == "Y":
-                print("Y accepted")
+            print("Is this the job you would like to update?\n")
+            user_selection = yes_no_questions()
+            if user_selection == "Yes":
                 row_to_update = all_jobs.iloc[[index_selected]]
                 print(row_to_update)
                 print()
@@ -206,9 +206,9 @@ class SearchAndDestroy:
                                 print("Error, unexpected input. Please try again")
                         break
                     else:
-                        print("Update status to Complete? Y/N")
-                        user_selection = input()
-                        if user_selection == "Y":
+                        print("Update status to Complete?")
+                        user_selection = yes_no_questions()
+                        if user_selection == "Yes":
                             print("Updating to complete..")
                             all_jobs.set_value(
                                 index_selected, "Job Status", "Complete")
@@ -219,7 +219,21 @@ class SearchAndDestroy:
             else:
                 print("An exception has occurred")
                 jobs.update_status()
-        main_menu()
+        return_to_menu()
+
+def return_to_menu():
+    print("Press Enter to return to the main menu.")
+    input()
+    main_menu()
+
+
+def yes_no_questions():
+    while user_selection not in OPTIONS:
+        print("Please select from the following options:")
+        for key in OPTIONS:
+            print(key, ' - ', OPTIONS[key])
+        user_selection = input("\n").strip()
+    return OPTIONS[user_selection]
 
 
 def status_selector():
@@ -244,9 +258,7 @@ def help_function():
     print("\n 2 - Search by status. You can find Jobs that are Pending, Ongoing or Complete specifically.\n The software presents these in a tidy table for you to use.")
     print("\n 3 - See all Jobs. From here, you can see every job that has been created.")
     print("\n 4 - Add a new Job. Here, you can follow the instructions to create a new Job. Please be aware that dates are in the UK format ie DD/MM/YYYY.")
-    print("Press any key to return to the main menu.")
-    user_selection = input()
-    main_menu()
+    return_to_menu()
 
 
 def main_menu():
