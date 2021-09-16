@@ -206,14 +206,19 @@ def job_selection():
     Checks to ensure the user's selection is within the all_jobs dataframe.  #  noqa
     '''
     all_jobs = get_all_jobs()
-    print(" Please see all jobs below:")
-    print(all_jobs.to_string())
-    print("\n Please select the row you want to select using the number to the far left of the row.\n")  # noqa
-    user_selection = input()
-    if (all_jobs.index == user_selection).any() is False or user_selection == '':
+    index_selected = None
+    OPTIONS = range(len(all_jobs))
+    while index_selected not in OPTIONS:
+        print(all_jobs.to_string())
+        print("\n Please select the row you want to select using the number to the far left of the row.\n")  # noqa
+        user_selection = input("\n").strip()
+        if user_selection == "":   # Used to ensure that the program doesn't crash if the user inputs a blank line
+            print(" Please select a valid index.")
+            continue
+        else:
+            index_selected = int(user_selection)
         print(" Please select a valid index.")
-        job_selection()
-    index_selected = int(user_selection)
+        
     return index_selected
 
 
