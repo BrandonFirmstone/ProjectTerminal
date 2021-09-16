@@ -313,6 +313,9 @@ def main_menu():
         "0": "exit",
     }
     print(chr(27) + "[2J")
+    print("###############################\n")
+    print("P R O J E C T \nT E R M I N A L\n")
+    print("###############################\n\n")
     print("########################################")
     print("           M A I N   M E N U         ")
     print("########################################")
@@ -346,8 +349,6 @@ def main_menu():
             return_to_menu()
 
 
-print("###############################\n")
-print("P R O J E C T \nT E R M I N A L\n")
-print("###############################")
-while True:
-    main_menu()
+
+
+main_menu()
