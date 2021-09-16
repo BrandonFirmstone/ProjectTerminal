@@ -333,6 +333,7 @@ def main_menu():
         print_all_jobs()
     elif user_selection == 4 or user_selection == "4":
         new_job = Job()
+        print(new_job.__str__)
         new_job.to_csv()
     elif user_selection == 5 or user_selection == "5":
         view_due_jobs()
