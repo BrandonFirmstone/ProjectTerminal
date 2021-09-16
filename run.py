@@ -156,7 +156,7 @@ def print_specific_jobs():
 def delete_specific_job():
     all_jobs = get_all_jobs()
     print('####################')
-    print('# DELETE JOB')
+    print('DELETE JOB')
     print('####################\n')
     index_selected = job_selection()
     print(all_jobs.iloc[[index_selected]])
@@ -202,6 +202,7 @@ def yes_no_questions():
     return OPTIONS[user_selection]
 
 def update_status():
+    all_jobs = get_all_jobs()
     job_index = job_selection()
     user_selection = None
     while user_selection not in STATUSES:
