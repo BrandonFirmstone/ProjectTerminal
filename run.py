@@ -118,6 +118,7 @@ class Job:
         with open("jobs.csv", 'a+', newline='') as write_obj:
             csv_writer = writer(write_obj)
             csv_writer.writerow(new_job)
+        return_to_menu()
 
 
 def view_due_jobs():
