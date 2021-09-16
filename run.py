@@ -150,6 +150,9 @@ def print_specific_jobs():
     '''
     print_specific_jobs: Function to print specific jobs based upon the job status.  #  noqa
     '''
+    print("####################")
+    print("SEARCH BY STATUS")
+    print("####################")
     all_jobs = get_all_jobs()
     status = None
     while status not in STATUSES:
@@ -207,10 +210,11 @@ def job_selection():
     print(all_jobs.to_string())
     print("\n Please select the row you want to select using the number to the far left of the row.\n")  # noqa
     user_selection = input()
-    index_selected = int(user_selection)
-    if (all_jobs.index == user_selection).any() is False:
+    
+    if (all_jobs.index == user_selection).any() is False or user_selection == '':
         print(" Please select a valid index.")
         job_selection()
+    index_selected = int(user_selection)
     return index_selected
 
 
@@ -275,7 +279,7 @@ def help_function():
     print(" 5 - View all the jobs that are due today.")
     print("\n 6 - Delete a specific job from all jobs. This can be used to clear out old Complete jobs or delete any job for any reason.")  # noqa
     print("\n 7 - Update the status of any specific job. This is used to progress a job from Pending to Ongoing, Ongoing to Complete. You can revert a job to previous statuses if need be.")  # noqa
-    print("\n 0 - Close the program. This ends the program in the terminal. \n")
+    print("\n 0 - Close the program. This ends the program in the terminal. \n")   #  noqa
     return_to_menu()
 
 
