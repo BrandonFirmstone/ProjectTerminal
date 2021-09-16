@@ -44,6 +44,7 @@ class Job:
             __init__: function to either accept incoming values and assign to properites or create new object based on user input  #  noqa
             __str__: default string display
             to_array: [place items into an ary based on status, description, priority, due_date]  #  noqa
+            to_csv: Writes specific job to CSV file
     """
 
     def __init__(self, status=None, description=None, priority=None, due_date=None):  # noqa
@@ -219,7 +220,6 @@ def job_selection():
         else:
             index_selected = int(user_selection)
         print(" Please select a valid index.")
-        
     return index_selected
 
 
