@@ -225,6 +225,15 @@ def help_function():
     print("\n 2 - Search by status. You can find Jobs that are Pending, Ongoing or Complete specifically.\n The software presents these in a tidy table for you to use.")
     print("\n 3 - See all Jobs. From here, you can see every job that has been created.")
     print("\n 4 - Add a new Job. Here, you can follow the instructions to create a new Job. Please be aware that dates are in the UK format ie DD/MM/YYYY.")
+    print("Press enter to continue to the next page.")
+    input()
+    print(chr(27) + "[2J")
+    print(" 5 - View all the jobs that are due today.")
+    print("\n 6 - Delete a specific job from all jobs. This can be used to clear out old Complete jobs or delete any job for any reason.")
+    print("\n 7 - Update the status of any specific job. This is used to progress a job from Pending to Ongoing, Ongoing to Complete. You can revert a job to previous statuses if need be.")
+    print("\n 0 - Close the program. This ends the program in the terminal. \n")
+    return_to_menu()
+    
     return_to_menu()
 
 def get_all_jobs():
@@ -237,7 +246,7 @@ def main_menu():
         "2": "Search By Status",
         "3": "See All Jobs",
         "4": "Add New Job",
-        "5": "View Jobs by Due Date",
+        "5": "View Due Jobs",
         "6": "Delete a Job",
         "7": "Update Status",
         "0": "exit",
@@ -267,15 +276,15 @@ def main_menu():
         delete_specific_job()
     elif user_selection == 7 or user_selection == "7":
         update_status()
-
     elif user_selection == 0:
         print("Are you sure you would like to exit?")  
-        user_selection = yes_no_questions()
-        if user_selection == "Yes":
-            main_menu()
-        else:
+        answer = yes_no_questions()
+        if answer == "Yes":
             print("Thank you for using Project Terminal! Goodbye!")
             sys.exit(0)
+        else:
+            return_to_menu()
+
 
 print("###############################\n")
 print("P R O J E C T \nT E R M I N A L\n")
