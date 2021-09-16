@@ -165,7 +165,7 @@ def print_specific_jobs():
         print(" Error - Job status entered is unrecognised. \n Would you like to try again?\n")  # noqa
         user_selection = yes_no_questions()
         if user_selection == "Yes":
-            status_selector()
+            print_specific_jobs()
         else:
             return_to_menu()
     return_to_menu()
