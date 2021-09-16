@@ -210,7 +210,6 @@ def job_selection():
     print(all_jobs.to_string())
     print("\n Please select the row you want to select using the number to the far left of the row.\n")  # noqa
     user_selection = input()
-    
     if (all_jobs.index == user_selection).any() is False or user_selection == '':
         print(" Please select a valid index.")
         job_selection()
