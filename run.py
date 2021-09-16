@@ -79,7 +79,7 @@ class Job:
     def get_description(self):
         user_selection = None
         while user_selection is None:
-            user_selection = input("Please enter a description. 30 Characters or less.\n").strip().capitalize()  # noqa
+            user_selection = input("Please enter a description. 50 Characters or less.\n").strip().capitalize()  # noqa
             if len(user_selection) >= 4 or len(user_selection) <= 50:
                 pass
             else:
