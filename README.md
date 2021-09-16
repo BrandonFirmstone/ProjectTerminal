@@ -48,6 +48,7 @@ The final selection for the user is the due date. This is so that the user knows
 
 The below is how a task is presented to the user:
 
+![job-example](https://user-images.githubusercontent.com/83018530/133683430-379e7ea3-720f-491a-a58d-35b37498f032.png)
 
 
 The way that new jobs are created is through a class called Job. This class includes four methods for job creation:
