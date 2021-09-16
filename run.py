@@ -123,7 +123,7 @@ def view_due_jobs():
     all_jobs = get_all_jobs()
     now = datetime.datetime.now()
     date_formatted = now.strftime("%d/%m/%Y")
-    pending_jobs = all_jobs[((all_jobs['Job Status'] == 'Pending') & (all_jobs['Job Status'] == 'Ongoing')) & (all_jobs['Due Date'] <= date_formatted)]
+    item = 0
     specified_tasks = all_jobs[all_jobs['Due Date'].str.match(date_formatted)]
     print(" Tasks due or overdue \n")
     print(f"{Fore.RED}{specified_tasks} \033[39m \n")
