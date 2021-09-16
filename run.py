@@ -99,7 +99,7 @@ class Job:
     def get_due_date(self):
         due_date = None
         while not due_date:
-            due_date = input("Please enter a due date in form dd/mm/yyyy:\n").strip()  # noqa
+            due_date = input("Please enter a due date in format:\n dd/mm/yyyy:\n").strip()  # noqa
             try:
                 dd = datetime.datetime.strptime(due_date, '%d/%m/%Y')
                 if dd.date() < datetime.datetime.now().date():
@@ -116,6 +116,7 @@ class Job:
 
     def to_csv(self):
         new_job = self.to_array()
+        print(new_job)
         with open("jobs.csv", 'a+', newline='') as write_obj:
             csv_writer = writer(write_obj)
             csv_writer.writerow(new_job)
@@ -142,7 +143,7 @@ def print_all_jobs():
     '''
     all_jobs = get_all_jobs()
     print('####################')
-    print('# PRINT ALL JOBS')
+    print('#  PRINT ALL JOBS  #')
     print('####################\n')
     print(all_jobs.to_string())
     return_to_menu()
@@ -153,7 +154,7 @@ def print_specific_jobs():
     print_specific_jobs: Function to print specific jobs based upon the job status.  #  noqa
     '''
     print("####################")
-    print("SEARCH BY STATUS")
+    print("# SEARCH BY STATUS #")
     print("####################")
     all_jobs = get_all_jobs()
     status = None
@@ -183,7 +184,7 @@ def delete_specific_job():
     '''
     all_jobs = get_all_jobs()
     print('####################')
-    print('DELETE JOB')
+    print('#    DELETE JOB    #')
     print('####################\n')
     index_selected = job_selection()
     print(all_jobs.iloc[[index_selected]])
@@ -209,17 +210,18 @@ def job_selection():
     '''
     all_jobs = get_all_jobs()
     index_selected = None
-    OPTIONS = range(len(all_jobs))
-    while index_selected not in OPTIONS:
+    while (index_selected in all_jobs.index) is False:
         print(all_jobs.to_string())
         print("\n Please select the row you want to select using the number to the far left of the row.\n")  # noqa
         user_selection = input("\n").strip()
         if user_selection == "":   # Used to ensure that the program doesn't crash if the user inputs a blank line
-            print(" Please select a valid index.")
+            print(" Please select a valid index. 1")
             continue
         else:
-            index_selected = int(user_selection)
-        print(" Please select a valid index.")
+            try:
+                index_selected = int(user_selection)
+            except:
+                print("Please enter a valid index. 2")
     return index_selected
 
 
@@ -268,23 +270,26 @@ def help_function():
     help_function: Used to display information to the user regarding how the program works and its use.  #  noqa
     '''
     print(chr(27) + "[2J")
-    print("####################")
-    print("HELP MENU")
-    print("####################\n")
-    print(" Project Terminal is a project management application.\n This software is designed to help you keep track of what tasks need to be completed.")  # noqa
-    print(" Occasionally you will be asked for input.\n Typically, the software is looking for either a number correlating to an option on the screen or for a keyword such as 'Pending'.")  # noqa
+    print("########################")
+    print("# HELP MENU  -  Page 1 #")
+    print("########################\n")
+    print(" Project Terminal is a project management application.\n")  # noqa
+    print(" Occasionally you will be asked for input.\n The software accepts numbers only.\n")  # noqa
     print(" On the main menu, the options presented to you will do the following:")  # noqa
-    print("\n 1 - Bring up this helpful menu explaining the program.")  # noqa
-    print("\n 2 - Search by status. You can find Jobs that are Pending, Ongoing or Complete specifically.\n The software presents these in a tidy table for you to use.")  # noqa
-    print("\n 3 - See all Jobs. From here, you can see every job that has been created.")  # noqa
-    print("\n 4 - Add a new Job. Here, you can follow the instructions to create a new Job. Please be aware that dates are in the UK format ie DD/MM/YYYY.")  # noqa
+    print("\n Option 1:\n Bring up this helpful menu.")  # noqa
+    print("\n Option 2:\n Search by Job status.")  # noqa
+    print("\n Option 3:\n View every job.")  # noqa
+    print("\n Option 4:\n Add a new Job.")  # noqa
     print("Press enter to continue to the next page.")
     input()
     print(chr(27) + "[2J")
-    print(" 5 - View all the jobs that are due today.")
-    print("\n 6 - Delete a specific job from all jobs. This can be used to clear out old Complete jobs or delete any job for any reason.")  # noqa
-    print("\n 7 - Update the status of any specific job. This is used to progress a job from Pending to Ongoing, Ongoing to Complete. You can revert a job to previous statuses if need be.")  # noqa
-    print("\n 0 - Close the program. This ends the program in the terminal. \n")   #  noqa
+    print("########################")
+    print("# HELP MENU  -  Page 2 #")
+    print("########################\n")
+    print("\n Option 5:\n View all jobs that are due today.")
+    print("\n Option 6:\n Delete a specific job.")  # noqa
+    print("\n Option 7:\n Update the status of a job.")  # noqa
+    print("\n Option 0:\n This ends the program in the terminal. \n")   #  noqa
     return_to_menu()
 
 
@@ -314,12 +319,12 @@ def main_menu():
         "0": "exit",
     }
     print(chr(27) + "[2J")
-    print("###############################\n")
-    print("P R O J E C T \nT E R M I N A L\n")
-    print("###############################\n\n")
-    print("########################################")
-    print("           M A I N   M E N U         ")
-    print("########################################")
+    print("#####################################\n")
+    print("#  P R O J E C T \nT E R M I N A L  #\n")
+    print("#####################################\n\n")
+    print("#####################################")
+    print("#          M A I N   M E N U        #")
+    print("#####################################")
     user_selection = None
     while user_selection not in MENUS:
         for key in MENUS:
@@ -332,8 +337,10 @@ def main_menu():
     elif user_selection == 3 or user_selection == "3":
         print_all_jobs()
     elif user_selection == 4 or user_selection == "4":
+        print("#######################")
+        print("#    N E W   J O B    #")
+        print("#######################")
         new_job = Job()
-        print(new_job.__str__)
         new_job.to_csv()
     elif user_selection == 5 or user_selection == "5":
         view_due_jobs()
@@ -345,12 +352,12 @@ def main_menu():
         print("Are you sure you would like to exit?")
         answer = yes_no_questions()
         if answer == "Yes":
-            print("Thank you for using Project Terminal! Goodbye!")
+            print("Thank you for using Project Terminal!")
+            print("###############################")
+            print("#        G O O D B Y E        #")
+            print("###############################")
             sys.exit(0)
         else:
             return_to_menu()
-
-
-
 
 main_menu()
