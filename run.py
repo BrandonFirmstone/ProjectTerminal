@@ -4,19 +4,21 @@ import sys
 from colorama import Fore
 from csv import writer
 
-
+#Dictionary for all available job statuses - constant variable
 STATUSES = {
     "1": "Pending",
     "2": "Ongoing",
     "3": "Complete"
 }
 
+#Dictionary for all available job priorities - constant variable
 PRIORITIES = {
     "1": "Low",
     "2": "Medium",
     "3": "High"
 }
 
+#Dictionary for yes or no questions - constant variable
 OPTIONS = {
             "1": "Yes",
             "2": "No"
@@ -114,6 +116,10 @@ class Job:
                 csv_writer.writerow(new_job)
 
 def view_due_jobs():
+    '''
+    view_due_jobs: Function to show the user all jobs due on the current date.
+    Prints these jobs in red as a warning that they are due.
+    '''
     all_jobs = get_all_jobs()
     now = datetime.datetime.now()
     date_formatted = now.strftime("%d/%m/%Y")
@@ -124,6 +130,9 @@ def view_due_jobs():
     return_to_menu()
 
 def print_all_jobs():
+    '''
+    print_all_jobs: Function to show the user in the terminal all jobs in the jobs.csv file
+    '''
     all_jobs = get_all_jobs()
     print('####################')
     print('# PRINT ALL JOBS')
@@ -132,28 +141,34 @@ def print_all_jobs():
     return_to_menu()
 
 def print_specific_jobs():
-        all_jobs = get_all_jobs()
-        status = None
-        while status not in STATUSES:
-            print("Please select a status:\n")
-            for key in STATUSES:
-                print(key, ' - ', STATUSES[key])
-            status = input("\n").strip()
-        category = STATUSES[status]
-        if category == "Pending" or category == "Ongoing" or category == "Complete":
-            specified_tasks = all_jobs[all_jobs['Job Status'].str.match(
-                category)]
-            print(specified_tasks.to_string())
+    '''
+    print_specific_jobs: Function to print specific jobs based upon the job status.
+    '''
+    all_jobs = get_all_jobs()
+    status = None
+    while status not in STATUSES:
+        print("Please select a status:\n")
+        for key in STATUSES:
+            print(key, ' - ', STATUSES[key])
+        status = input("\n").strip()
+    category = STATUSES[status]
+    if category == "Pending" or category == "Ongoing" or category == "Complete":
+        specified_tasks = all_jobs[all_jobs['Job Status'].str.match(category)]
+        print(specified_tasks.to_string())
+    else:
+        print(" Error - Job status entered is unrecognised. \n Would you like to try again?\n")
+        user_selection = yes_no_questions()
+        if user_selection == "Yes":
+            status_selector()
         else:
-            print(" Error - Job status entered is unrecognised. \n Would you like to try again?\n")
-            user_selection = yes_no_questions()
-            if user_selection == "Yes":
-                status_selector()
-            else:
-                return_to_menu()
-        return_to_menu()
+            return_to_menu()
+    return_to_menu()
 
 def delete_specific_job():
+    '''
+    delete_specific_job: Function to delete specific job by utilizing the job_selection function.
+    Removes the job from the dataframe and then writes the amended dataframe over jobs.csv
+    '''
     all_jobs = get_all_jobs()
     print('####################')
     print('DELETE JOB')
@@ -175,6 +190,9 @@ def delete_specific_job():
         return_to_menu()
 
 def job_selection():
+    '''
+    job_selection: Used to display all jobs to a user and return the user's selection. Checks to ensure the user's selection is within the all_jobs dataframe.
+    '''
     all_jobs = get_all_jobs()
     print(" Please see all jobs below:")
     print(all_jobs.to_string())
@@ -187,12 +205,19 @@ def job_selection():
     return index_selected
 
 def return_to_menu():
+    '''
+    return_to_menu: Displays a message to the user, waits for the user to press enter and runs the main_menu() function.
+    '''
     print("Press Enter to return to the main menu.")
     input()
     main_menu()
 
 
 def yes_no_questions():
+    '''
+    yes_no_questions: Used to return a yes or no answer from the user. Created to reduce repetition.
+    Utilises the OPTIONS constant variable for options. Only allows the user to progress if they choose a valid option
+    '''
     user_selection = None
     while user_selection not in OPTIONS:
         print("Please select from the following options:")
@@ -202,6 +227,10 @@ def yes_no_questions():
     return OPTIONS[user_selection]
 
 def update_status():
+    '''
+    update_status: Utilizes the job_selection function to select a specific job and then updates the status based on the STATUSES constant variable.
+    Makes the change in the all_jobs dataframe and then writes over the jobs.csv file using the amended dataframe.
+    '''
     all_jobs = get_all_jobs()
     job_index = job_selection()
     user_selection = None
@@ -211,9 +240,12 @@ def update_status():
         user_selection = input("What status would you like to select?\n").strip()
     all_jobs.at[job_index, 'Job Status'] = STATUSES[user_selection]
     all_jobs.to_csv('jobs.csv', index=False)
+    return_to_menu()
 
 def help_function():
-
+    '''
+    help_function: Used to display information to the user regarding how the program works and its use.
+    '''
     print(chr(27) + "[2J")
     print("####################")
     print("HELP MENU")
@@ -237,10 +269,17 @@ def help_function():
     return_to_menu()
 
 def get_all_jobs():
+    '''
+    get_all_jobs: Function to return a dataframe from the jobs.csv file. This is used very regularly to ensure that the user is always utilizing the most recent and up to date version of the file.
+    This ensures no erroneous changes from differences between what the user sees and what's actually in the csv.
+    '''
     all_jobs = pd.read_csv("jobs.csv")
     return all_jobs
 
 def main_menu():
+    '''
+    main_menu: Displays the main menu to the user using a constant variable called MENUS. Then based on user decision directs them to the function or functions they need to use.
+    '''
     MENUS = {
         "1": "Help",
         "2": "Search By Status",
