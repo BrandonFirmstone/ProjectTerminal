@@ -147,11 +147,13 @@ I deployed this project to Heroku as the Python backend language would not funct
 These are the steps I took to deploy the project to Heroku:
 
 - Log into Heroku and create a new app.
+
 ![create a new app](https://user-images.githubusercontent.com/83018530/133721528-4fc35e13-49f1-4725-8833-cc9038285241.PNG
 
 ![create-app](https://user-images.githubusercontent.com/83018530/133721568-9e6ebc00-679b-4847-b438-16fe8b93699b.PNG)
 
 - Then I need to add the nodejs buildpack and Python build pack to enable the app to work correctly.
+
 ![nodejs buildpack](https://user-images.githubusercontent.com/83018530/133721650-639409f9-855c-4877-a532-be6055109bf9.PNG)
 
 ![python buildpack](https://user-images.githubusercontent.com/83018530/133721653-d30b8813-79ca-4d9d-afe8-0df212ae113a.PNG)
@@ -159,13 +161,15 @@ These are the steps I took to deploy the project to Heroku:
 ![buildpacks after](https://user-images.githubusercontent.com/83018530/133721678-9d06bf4e-8327-40f4-9091-d90aba8d957a.PNG)
 
 - Then, I need to set up the config vars required for the program to run.
+
 ![config vars before](https://user-images.githubusercontent.com/83018530/133721721-30f15ffa-6648-4dfc-b30d-5941ea010840.PNG)
 
 ![config vars after](https://user-images.githubusercontent.com/83018530/133721739-ceccc59a-6a58-454f-8ccd-299c82675c3c.PNG)
 
 - Now I need to find the Repository from my Github in Heroku. This also means connecting my Github to Heroku.
-- 
+
 ![deploy-github](https://user-images.githubusercontent.com/83018530/133721833-b88e3851-55a2-41ce-8609-5f230ebf3a4b.PNG)
+
 
 ![deploy-find-repo](https://user-images.githubusercontent.com/83018530/133721786-c645cf44-40dc-4dec-9536-1eb5946fe5f6.PNG)
 
@@ -173,9 +177,8 @@ These are the steps I took to deploy the project to Heroku:
 
 ![deploying](https://user-images.githubusercontent.com/83018530/133721928-f3d57b48-3999-43d0-98f3-4e3c4f6e70d5.PNG)
 
+
 The deployment is now complete.
-
-
 
 
 ## Bugs and Testing
