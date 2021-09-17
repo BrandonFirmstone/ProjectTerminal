@@ -238,3 +238,7 @@ This is a flow chart that I used to help design the program. It might be messy a
 - https://thispointer.com/python-pandas-select-rows-in-dataframe-by-conditions-on-multiple-columns/
 
 - https://www.askpython.com/python-modules/pandas/update-the-value-of-a-row-dataframe
+
+
+## Other Notes
+Commit messages for jobs.csv might be messy. This is because as I was testing and making the features of the program, as these features would manipulate the information in the csv it too would be committed every time I did 'git add .'. I don't believe this is an issue because it doesn't particularly matter what the contents of the commit messages are because of the sheer potential volume of changes made to the spreadsheet.
