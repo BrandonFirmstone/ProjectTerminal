@@ -164,9 +164,12 @@ def print_specific_jobs():
             print(key, ' - ', STATUSES[key])
         status = input("\n").strip()
     category = STATUSES[status]
+    specified_tasks = all_jobs[all_jobs['Job Status'].str.match(category)]  # noqa
     if category == "Pending" or category == "Ongoing" or category == "Complete":  # noqa
-        specified_tasks = all_jobs[all_jobs['Job Status'].str.match(category)]  # noqa
-        print(specified_tasks.to_string())
+        if len(specified_tasks) > 0:
+            print(specified_tasks.to_string())
+        else:
+            print(f"No jobs with status {category} found.")
     else:
         print(" Error - Job status entered is unrecognised. \n Would you like to try again?\n")  # noqa
         user_selection = yes_no_questions()
