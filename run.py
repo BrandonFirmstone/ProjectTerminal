@@ -320,7 +320,8 @@ def main_menu():
     }
     print(chr(27) + "[2J")
     print("#####################################\n")
-    print("#  P R O J E C T \nT E R M I N A L  #\n")
+    print("#            P R O J E C T          #")
+    print("#           T E R M I N A L         #")
     print("#####################################\n\n")
     print("#####################################")
     print("#          M A I N   M E N U        #")
