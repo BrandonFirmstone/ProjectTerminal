@@ -75,6 +75,9 @@ Then, there are 7 main functions that the user utilises to manipulate and view t
 - help_function: This help function helps to explain to the user the different options available to them and the ways they can use the program.
 - main_menu: The main_menu function is the main way the user chooses what they want to do. From here they can use any of the above functions or exit the program.
 
+## Bugs and Testing
+
+Bugs and testing are both managed by Github Issues and Project respectively.
 
 ## Libraries Used
 
