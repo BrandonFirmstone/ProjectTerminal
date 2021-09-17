@@ -319,7 +319,7 @@ def main_menu():
         "0": "exit",
     }
     print(chr(27) + "[2J")
-    print("#####################################\n")
+    print("#####################################")
     print("#            P R O J E C T          #")
     print("#           T E R M I N A L         #")
     print("#####################################\n\n")
@@ -349,7 +349,7 @@ def main_menu():
         delete_specific_job()
     elif user_selection == 7 or user_selection == "7":
         update_status()
-    elif user_selection == 0:
+    elif user_selection == 0 or user_selection == "0":
         print("Are you sure you would like to exit?")
         answer = yes_no_questions()
         if answer == "Yes":
