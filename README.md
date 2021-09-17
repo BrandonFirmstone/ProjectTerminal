@@ -1,6 +1,10 @@
 # Project Terminal
 
+![image](https://user-images.githubusercontent.com/83018530/133722366-7d9a553a-c52f-4c60-8e40-5cc18cf7fc6f.png)
+
 A project management solution using Python and a command line interface.
+
+Deployed here: https://project-terminal.herokuapp.com/
 
 ## Table of contents
 
