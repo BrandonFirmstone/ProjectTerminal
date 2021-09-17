@@ -75,6 +75,44 @@ Then, there are 7 main functions that the user utilises to manipulate and view t
 - help_function: This help function helps to explain to the user the different options available to them and the ways they can use the program.
 - main_menu: The main_menu function is the main way the user chooses what they want to do. From here they can use any of the above functions or exit the program.
 
+## Demonstrations of functions
+The below are videos recorded of the terminal performing different functions.
+
+### Help Menu
+
+![help menu](https://user-images.githubusercontent.com/83018530/133719010-ae2cd56a-82c0-4562-a26b-14da9ac6d32a.gif)
+
+
+### Search By Status
+
+![search by status](https://user-images.githubusercontent.com/83018530/133719022-639b27cf-697f-4297-b5ca-c897e6a47228.gif)
+
+
+### Print All Jobs
+
+![see all jobs](https://user-images.githubusercontent.com/83018530/133719046-cfeb30ce-ca03-4c30-a8fc-f9d15da91a9a.gif)
+
+
+### Add Job
+
+![add new job](https://user-images.githubusercontent.com/83018530/133719054-dc687ff7-e48f-426f-aee5-3d0244a0ea38.gif)
+
+
+### View Due Jobs
+
+![view due jobs](https://user-images.githubusercontent.com/83018530/133719066-bdabce56-b9a9-4e4b-a463-8de34ca07b20.gif)
+
+
+### Delete Specific Job
+
+![delete a job](https://user-images.githubusercontent.com/83018530/133719072-32c021b8-ec3a-48c3-8bbe-1b07892fe66e.gif)
+
+
+### Update Status
+
+![update status](https://user-images.githubusercontent.com/83018530/133719076-c0ae158c-809a-4b33-8c13-56bf5200bcd0.gif)
+
+
 ## Bugs and Testing
 
 Bugs and testing are both managed by Github Issues and Project respectively.
