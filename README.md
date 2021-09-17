@@ -8,7 +8,7 @@ Table of contents here
 
 ## Project Goals
 
-The aim of this project is to create a text-based command line project management application. Using CSV files as the basis for storing the information, the program should be able to read, write and amend information contained within the spreadsheet. 
+The aim of this project is to create a text-based command line project management application. Using CSV files as the basis for storing the information, the program should be able to read, write and amend information contained within the spreadsheet. Users will be treated as admins and can run a series of tasks from the main menu where they can see the current jobs and status, update status, add new tasks and delete items or search by status or see jobs that are due. 
 
 
 ## Project Features 
@@ -76,7 +76,7 @@ Then, there are 7 main functions that the user utilises to manipulate and view t
 - main_menu: The main_menu function is the main way the user chooses what they want to do. From here they can use any of the above functions or exit the program.
 
 ## Demonstrations of functions
-The below are videos recorded of the terminal performing different functions.
+The below are videos recorded of the terminal performing different previously mentioned functions.
 
 ### Help Menu
 
@@ -112,10 +112,76 @@ The below are videos recorded of the terminal performing different functions.
 
 ![update status](https://user-images.githubusercontent.com/83018530/133719076-c0ae158c-809a-4b33-8c13-56bf5200bcd0.gif)
 
+## Data Model
+To track items that were in the CVS beter, I created a data model called Job.
+
+### Properties
+    **status:** Pending - The job has been posted and not started. Ongoing - The job has been started. Complete - The job is finished. description: String 1 - 30 characters long to prevent wrapping to next line on console 
+    **priority:** Low, Medium or High priority. Helps the use to decide what order to do jobs
+    **due_date:** The date the task is due, must be in the future or equal to current date  
+### Methods:
+    **get_status:** user input to select status from STATUSES
+    **get_description:** user input to set description
+    **get_priority:** user input to select priority from PRIORITIES
+    **due_date:** user input to get due date in DD/MM/YYYY format
+    **__init__:** function to either accept incoming values and assign to properites or create new object based on user input 
+    **__str__:** default string display
+    **to_array:** [place items into an ary based on status, description, priority, due_date]  
+    **to_csv:** Writes specific job to CSV file
+
+### Validation Testing
+I put my code through pep8online:
+
+![image](https://user-images.githubusercontent.com/83018530/133721068-b55d6030-9d85-4b82-aa28-d2c31ec9632d.png)
+
+## Deployment
+### Requirements
+
+There are no requirements in place for a user to use this program. In the future, there should be workplaces, accounts and hierarchys within the program.
+
+To use the program locally, you will need to install the requirements using "pip3 install -r requirements.txt".
+
+### Heroku
+
+I deployed this project to Heroku as the Python backend language would not function correctly on Github Pages.
+These are the steps I took to deploy the project to Heroku:
+
+- Log into Heroku and create a new app.
+![create a new app](https://user-images.githubusercontent.com/83018530/133721528-4fc35e13-49f1-4725-8833-cc9038285241.PNG
+
+![create-app](https://user-images.githubusercontent.com/83018530/133721568-9e6ebc00-679b-4847-b438-16fe8b93699b.PNG)
+
+- Then I need to add the nodejs buildpack and Python build pack to enable the app to work correctly.
+![nodejs buildpack](https://user-images.githubusercontent.com/83018530/133721650-639409f9-855c-4877-a532-be6055109bf9.PNG)
+
+![python buildpack](https://user-images.githubusercontent.com/83018530/133721653-d30b8813-79ca-4d9d-afe8-0df212ae113a.PNG)
+
+![buildpacks after](https://user-images.githubusercontent.com/83018530/133721678-9d06bf4e-8327-40f4-9091-d90aba8d957a.PNG)
+
+- Then, I need to set up the config vars required for the program to run.
+![config vars before](https://user-images.githubusercontent.com/83018530/133721721-30f15ffa-6648-4dfc-b30d-5941ea010840.PNG)
+
+![config vars after](https://user-images.githubusercontent.com/83018530/133721739-ceccc59a-6a58-454f-8ccd-299c82675c3c.PNG)
+
+- Now I need to find the Repository from my Github in Heroku. This also means connecting my Github to Heroku.
+- 
+![deploy-github](https://user-images.githubusercontent.com/83018530/133721833-b88e3851-55a2-41ce-8609-5f230ebf3a4b.PNG)
+
+![deploy-find-repo](https://user-images.githubusercontent.com/83018530/133721786-c645cf44-40dc-4dec-9536-1eb5946fe5f6.PNG)
+
+- Then I can deploy to Heroku.
+
+![deploying](https://user-images.githubusercontent.com/83018530/133721928-f3d57b48-3999-43d0-98f3-4e3c4f6e70d5.PNG)
+
+The deployment is now complete.
+
+
+
 
 ## Bugs and Testing
 
-Bugs and testing are both managed by Github Issues and Project respectively.
+Bugs found while testing are in the github  issues for this repository: [defects](https://github.com/BrandonFirmstone/ProjectTerminal/issues)
+Testing is documented in a Project Board in this repository [test cases](https://github.com/BrandonFirmstone/ProjectTerminal/projects/1)
 
 ## Libraries Used
 
@@ -124,7 +190,15 @@ Bugs and testing are both managed by Github Issues and Project respectively.
 - pytz for Pandas
 - Colorama to highlight tasks due
 
+## Constraints and other issues
+
+- Because of the terminal's size on the heroku deployed site I cannot create text or text-based graphics with more than 80 characters per line - otherwise the text get's wrapped to the next line.
+- Because of how Heroku is connected to Github, the information changed through Heroku is only temporarily saved. This is because I do not know how to get Heroku to make real-time changed to the CSV file in the Github repository. I believe that even though the CSV file is in essense static, it still shows a minimum viable product and proof of concept. This could be fixed if the project was hosted to a web server or utilizing a database instead of a CSV, it could directly read and write from the file and make the changes immediately. I did not use a database because I currently do not have the knowledge to do so.
+- Due to me being based in the UK, the Heroku app is hosted on a European server. This means that elsewhere in the world when they are still on the day before the UK, trying to put in a task of their current date is not allowed because it is seen as being in the past. This is not an issue at the moment because it is a minimum viable product. It shows proof of concept. In the future, there could be seperate servers for different time zones to ensure this doesn't happen.
+
 ## Acknowledgements
+
+- Code Institute Template - The Template for the GUI for this project was provided by Code Institute. This allows for the Command line to be shown and used within the browser.
 
 - https://realpython.com/documenting-python-code/
 
