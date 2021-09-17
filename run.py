@@ -32,18 +32,18 @@ class Job:
     """
     A class to help set up task records:
         Properties:
-            status: Pending - The job has been posted and not started. Ongoing - The job has been started. Complete - The job is finished.  #  noqa
-            description: String 1 - 30 characters long to prevent wrapping to next line on console  #  noqa
-            priority: Low, Medium or High priority. Helps the use to decide what order to do jobs  #  noqa
-            due_date: The date the task is due, must be in the future or equal to current date   #  noqa
+            status: Pending - The job has been posted and not started. Ongoing - The job has been started. Complete - The job is finished.  # noqa
+            description: String 1 - 30 characters long to prevent wrapping to next line on console  # noqa
+            priority: Low, Medium or High priority. Helps the use to decide what order to do jobs  # noqa
+            due_date: The date the task is due, must be in the future or equal to current date   # noqa
         Methods:
             get_status: user input to select status from STATUSES
             get_description: user input to set description
             get_priority: user input to select priority from PRIORITIES
             due_date: user input to get due date in DD/MM/YYYY format
-            __init__: function to either accept incoming values and assign to properites or create new object based on user input  #  noqa
+            __init__: function to either accept incoming values and assign to properites or create new object based on user input  # noqa
             __str__: default string display
-            to_array: [place items into an ary based on status, description, priority, due_date]  #  noqa
+            to_array: [place items into an ary based on status, description, priority, due_date]  # noqa
             to_csv: Writes specific job to CSV file
     """
 
@@ -52,7 +52,7 @@ class Job:
             self.status = STATUSES[status]
         else:
             self.status = self.get_status()
-        if description and len(description) <= 50 and len(description) > 0:
+        if description and len(description) <= 50 and len(description) > 4:
             self.description = description
         else:
             self.description = self.get_description()
@@ -81,7 +81,7 @@ class Job:
         user_selection = None
         while user_selection is None:
             user_selection = input("Please enter a description. 50 Characters or less.\n").strip().capitalize()  # noqa
-            if len(user_selection) >= 4 and len(user_selection) <= 50 and user_selection != None:
+            if len(user_selection) > 4 and len(user_selection) <= 50 and user_selection is not None:  # noqa
                 pass
             else:
                 print("Please type a valid description")
@@ -139,7 +139,7 @@ def view_due_jobs():
 
 def print_all_jobs():
     '''
-    print_all_jobs: Function to show the user in the terminal all jobs in the jobs.csv file  #  noqa
+    print_all_jobs: Function to show the user in the terminal all jobs in the jobs.csv file  # noqa
     '''
     all_jobs = get_all_jobs()
     print('####################')
@@ -151,7 +151,7 @@ def print_all_jobs():
 
 def print_specific_jobs():
     '''
-    print_specific_jobs: Function to print specific jobs based upon the job status.  #  noqa
+    print_specific_jobs: Function to print specific jobs based upon the job status.  # noqa
     '''
     print("####################")
     print("# SEARCH BY STATUS #")
@@ -182,8 +182,8 @@ def print_specific_jobs():
 
 def delete_specific_job():
     '''
-    delete_specific_job: Function to delete specific job by utilizing the job_selection function.  #  noqa
-    Removes the job from the dataframe and then writes the amended dataframe over jobs.csv   #  noqa
+    delete_specific_job: Function to delete specific job by utilizing the job_selection function.  # noqa
+    Removes the job from the dataframe and then writes the amended dataframe over jobs.csv   # noqa
     '''
     all_jobs = get_all_jobs()
     print('####################')
@@ -208,8 +208,8 @@ def delete_specific_job():
 
 def job_selection():
     '''
-    job_selection: Used to display all jobs to a user and return the user's selection.     #  noqa
-    Checks to ensure the user's selection is within the all_jobs dataframe.  #  noqa
+    job_selection: Used to display all jobs to a user and return the user's selection.     # noqa
+    Checks to ensure the user's selection is within the all_jobs dataframe.  # noqa
     '''
     all_jobs = pd.read_csv("jobs.csv")
     index_selected = None
@@ -217,20 +217,20 @@ def job_selection():
         print(all_jobs.to_string())
         print("\n Please select the row you want to select using the number \n to the far left of the row.\n")  # noqa
         user_selection = input("\n").strip()
-        if user_selection == "":   # Used to ensure that the program doesn't crash if the user inputs a blank line
+        if user_selection == "":   # noqa Used to ensure that the program doesn't crash if the user inputs a blank line
             print(" Please select a valid index. 1")
             continue
         else:
             try:
                 index_selected = int(user_selection)
-            except:
+            except ValueError:
                 print("Please enter a valid index. 2")
     return index_selected
 
 
 def return_to_menu():
     '''
-    return_to_menu: Displays a message to the user, waits for the user to press enter and runs the main_menu() function.  #  noqa
+    return_to_menu: Displays a message to the user, waits for the user to press enter and runs the main_menu() function.  # noqa
     '''
     print("Press Enter to return to the main menu.")
     input()
@@ -239,8 +239,8 @@ def return_to_menu():
 
 def yes_no_questions():
     '''
-    yes_no_questions: Used to return a yes or no answer from the user. Created to reduce repetition.  #  noqa
-    Utilises the OPTIONS constant variable for options. Only allows the user to progress if they choose a valid option  #  noqa
+    yes_no_questions: Used to return a yes or no answer from the user. Created to reduce repetition.  # noqa
+    Utilises the OPTIONS constant variable for options. Only allows the user to progress if they choose a valid option  # noqa
     '''
     user_selection = None
     while user_selection not in OPTIONS:
@@ -253,8 +253,8 @@ def yes_no_questions():
 
 def update_status():
     '''
-    update_status: Utilizes the job_selection function to select a specific job and then updates the status based on the STATUSES constant variable.  #  noqa
-    Makes the change in the all_jobs dataframe and then writes over the jobs.csv file using the amended dataframe.  #  noqa
+    update_status: Utilizes the job_selection function to select a specific job and then updates the status based on the STATUSES constant variable.  # noqa
+    Makes the change in the all_jobs dataframe and then writes over the jobs.csv file using the amended dataframe.  # noqa
     '''
     all_jobs = get_all_jobs()
     job_index = job_selection()
@@ -270,7 +270,7 @@ def update_status():
 
 def help_function():
     '''
-    help_function: Used to display information to the user regarding how the program works and its use.  #  noqa
+    help_function: Used to display information to the user regarding how the program works and its use.  # noqa
     '''
     print(chr(27) + "[2J")
     print("########################")
@@ -292,15 +292,15 @@ def help_function():
     print("\n Option 5:\n View all jobs that are due today.")
     print("\n Option 6:\n Delete a specific job.")  # noqa
     print("\n Option 7:\n Update the status of a job.")  # noqa
-    print("\n Option 0:\n This ends the program in the terminal. \n")   #  noqa
+    print("\n Option 0:\n This ends the program in the terminal. \n")   # noqa
     return_to_menu()
 
 
 def get_all_jobs():
     '''
     get_all_jobs: Function to return a dataframe from the jobs.csv file.
-    This is used very regularly to ensure that the user is always utilizing the most recent and up to date version of the file.  #  noqa
-    This ensures no erroneous changes from differences between what the user sees and what's actually in the csv.  #  noqa
+    This is used very regularly to ensure that the user is always utilizing the most recent and up to date version of the file.  # noqa
+    This ensures no erroneous changes from differences between what the user sees and what's actually in the csv.  # noqa
     '''
     all_jobs = pd.read_csv("jobs.csv")
     return all_jobs
@@ -308,8 +308,8 @@ def get_all_jobs():
 
 def main_menu():
     '''
-    main_menu: Displays the main menu to the user using a constant variable called MENUS.  #  noqa
-    Then based on user decision directs them to the function or functions they need to use.  #  noqa
+    main_menu: Displays the main menu to the user using a constant variable called MENUS.  # noqa
+    Then based on user decision directs them to the function or functions they need to use.  # noqa
     '''
     MENUS = {
         "1": "Help",
@@ -363,5 +363,6 @@ def main_menu():
             sys.exit(0)
         else:
             return_to_menu()
+
 
 main_menu()
