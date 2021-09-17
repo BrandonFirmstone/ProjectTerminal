@@ -184,6 +184,7 @@ The deployment is now complete.
 ## Bugs and Testing
 
 Bugs found while testing are in the github  issues for this repository: [defects](https://github.com/BrandonFirmstone/ProjectTerminal/issues)
+
 Testing is documented in a Project Board in this repository [test cases](https://github.com/BrandonFirmstone/ProjectTerminal/projects/1)
 
 ## Libraries Used
