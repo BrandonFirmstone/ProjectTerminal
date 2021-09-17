@@ -1,6 +1,8 @@
 Job Status,Job Description,Priority,Due Date
-Pending,Do the job,Medium,16/09/2021
-Pending,Test,Low,16/09/2021
-Complete,Description,Medium,21/09/2021
+Pending,Arrest Quark,Medium,22/09/2021
+Pending,Sell encyclopedias,Low,19/09/2021
+Complete,Kick droids out of Mos Eisley Cantina,Medium,21/09/2021
 Pending,Beam kirk up,High,19/09/2021
-Complete,Do the thing,Medium,17/09/2021
+Complete,Shoot Greedo,Medium,21/09/2021
+Ongoing,Survive the apocalype,High,30/09/2021
+Ongoing,Delete system32,Low,29/09/2021
