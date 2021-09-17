@@ -8,7 +8,31 @@ Deployed here: https://project-terminal.herokuapp.com/
 
 ## Table of contents
 
-Table of contents here
+- [Project Terminal](#project-terminal)
+  * [Table of contents](#table-of-contents)
+  * [Project Goals](#project-goals)
+  * [Project Features](#project-features)
+  * [Demonstrations of functions](#demonstrations-of-functions)
+    + [Help Menu](#help-menu)
+    + [Search By Status](#search-by-status)
+    + [Print All Jobs](#print-all-jobs)
+    + [Add Job](#add-job)
+    + [View Due Jobs](#view-due-jobs)
+    + [Delete Specific Job](#delete-specific-job)
+    + [Update Status](#update-status)
+  * [Data Model](#data-model)
+    + [Properties](#properties)
+    + [Methods:](#methods-)
+    + [Validation Testing](#validation-testing)
+  * [Deployment](#deployment)
+    + [Requirements](#requirements)
+    + [Heroku](#heroku)
+  * [Bugs and Testing](#bugs-and-testing)
+  * [Libraries Used](#libraries-used)
+  * [Constraints and other issues](#constraints-and-other-issues)
+  * [Flow Chart](#flow-chart)
+  * [Acknowledgements](#acknowledgements)
+  * [Other Notes](#other-notes)
 
 ## Project Goals
 
@@ -80,7 +104,7 @@ Then, there are 7 main functions that the user utilises to manipulate and view t
 - main_menu: The main_menu function is the main way the user chooses what they want to do. From here they can use any of the above functions or exit the program.
 
 ## Demonstrations of functions
-The below are videos recorded of the terminal performing different previously mentioned functions.
+The below are videos recorded of the terminal performing different previously mentioned functions. Note how all the user input is numeric in function to reduce typos, eliminate case sensitivity issues and trailing and leading whitespace is ignored. If a user enters something outside the scope of the options, the screen options reprint.
 
 ### Help Menu
 
@@ -98,6 +122,8 @@ The below are videos recorded of the terminal performing different previously me
 
 
 ### Add Job
+
+- All jobs need to have a description. These descriptions must be between 5 and 50 characters. If the user types no information into the description, how will they know what the task represents? Over 50 characters and there may be issues with the job row wrapping onto the next line.
 
 ![add new job](https://user-images.githubusercontent.com/83018530/133719054-dc687ff7-e48f-426f-aee5-3d0244a0ea38.gif)
 
@@ -120,18 +146,18 @@ The below are videos recorded of the terminal performing different previously me
 To track items that were in the CVS beter, I created a data model called Job.
 
 ### Properties
-    **status:** Pending - The job has been posted and not started. Ongoing - The job has been started. Complete - The job is finished. description: String 1 - 30 characters long to prevent wrapping to next line on console 
-    **priority:** Low, Medium or High priority. Helps the use to decide what order to do jobs
-    **due_date:** The date the task is due, must be in the future or equal to current date  
+**status:** Pending - The job has been posted and not started. Ongoing - The job has been started. Complete - The job is finished. description: String 1 - 30 characters long to prevent wrapping to next line on console 
+**priority:** Low, Medium or High priority. Helps the use to decide what order to do jobs
+**due_date:** The date the task is due, must be in the future or equal to current date  
 ### Methods:
-    **get_status:** user input to select status from STATUSES
-    **get_description:** user input to set description
-    **get_priority:** user input to select priority from PRIORITIES
-    **due_date:** user input to get due date in DD/MM/YYYY format
-    **__init__:** function to either accept incoming values and assign to properites or create new object based on user input 
-    **__str__:** default string display
-    **to_array:** [place items into an ary based on status, description, priority, due_date]  
-    **to_csv:** Writes specific job to CSV file
+**get_status:** user input to select status from STATUSES
+**get_description:** user input to set description
+**get_priority:** user input to select priority from PRIORITIES
+**due_date:** user input to get due date in DD/MM/YYYY format
+**__init__:** function to either accept incoming values and assign to properites or create new object based on user input 
+**__str__:** default string display
+**to_array:** [place items into an ary based on status, description, priority, due_date]  
+**to_csv:** Writes specific job to CSV file
 
 ### Validation Testing
 I put my code through pep8online:
@@ -201,8 +227,15 @@ Testing is documented in a Project Board in this repository [test cases](https:/
 ## Constraints and other issues
 
 - Because of the terminal's size on the heroku deployed site I cannot create text or text-based graphics with more than 80 characters per line - otherwise the text get's wrapped to the next line.
-- Because of how Heroku is connected to Github, the information changed through Heroku is only temporarily saved. This is because I do not know how to get Heroku to make real-time changed to the CSV file in the Github repository. I believe that even though the CSV file is in essense static, it still shows a minimum viable product and proof of concept. This could be fixed if the project was hosted to a web server or utilizing a database instead of a CSV, it could directly read and write from the file and make the changes immediately. I did not use a database because I currently do not have the knowledge to do so.
+- Because of how Heroku is connected to Github, the information changed through Heroku is only temporarily saved. Heroku restarts itself and removes any local data periodically. This is because I do not know how to get Heroku to make real-time changed to the CSV file in the Github repository. I believe that even though the CSV file is in essense static, it still shows a minimum viable product and proof of concept. This could be fixed if the project was hosted to a web server or utilizing a database instead of a CSV, it could directly read and write from the file and make the changes immediately. I did not use a database because I currently do not have the knowledge to do so.
 - Due to me being based in the UK, the Heroku app is hosted on a European server. This means that elsewhere in the world when they are still on the day before the UK, trying to put in a task of their current date is not allowed because it is seen as being in the past. This is not an issue at the moment because it is a minimum viable product. It shows proof of concept. In the future, there could be seperate servers for different time zones to ensure this doesn't happen.
+
+## Flow Chart
+
+This is a flow chart that I used to help design the program. It might be messy and a little bit difficult to read, but it shows how I tried to structure the program and the flow of logic that it took.
+
+![program flow](https://user-images.githubusercontent.com/83018530/133726646-83113194-bb3f-4d12-81a8-d7d93cf5b48c.png)
+
 
 ## Acknowledgements
 
@@ -229,3 +262,11 @@ Testing is documented in a Project Board in this repository [test cases](https:/
 - https://thispointer.com/python-pandas-select-rows-in-dataframe-by-conditions-on-multiple-columns/
 
 - https://www.askpython.com/python-modules/pandas/update-the-value-of-a-row-dataframe
+
+- https://ecotrust-canada.github.io/markdown-toc/ - Table of contents generator
+
+- My wonderful mentor Malia for helping me through this project :)
+
+
+## Other Notes
+Commit messages for jobs.csv might be messy. This is because as I was testing and making the features of the program, as these features would manipulate the information in the csv it too would be committed every time I did 'git add .'. I don't believe this is an issue because it doesn't particularly matter what the contents of the commit messages are because of the sheer potential volume of changes made to the spreadsheet.
