@@ -8,7 +8,31 @@ Deployed here: https://project-terminal.herokuapp.com/
 
 ## Table of contents
 
-Table of contents here
+- [Project Terminal](#project-terminal)
+  * [Table of contents](#table-of-contents)
+  * [Project Goals](#project-goals)
+  * [Project Features](#project-features)
+  * [Demonstrations of functions](#demonstrations-of-functions)
+    + [Help Menu](#help-menu)
+    + [Search By Status](#search-by-status)
+    + [Print All Jobs](#print-all-jobs)
+    + [Add Job](#add-job)
+    + [View Due Jobs](#view-due-jobs)
+    + [Delete Specific Job](#delete-specific-job)
+    + [Update Status](#update-status)
+  * [Data Model](#data-model)
+    + [Properties](#properties)
+    + [Methods:](#methods-)
+    + [Validation Testing](#validation-testing)
+  * [Deployment](#deployment)
+    + [Requirements](#requirements)
+    + [Heroku](#heroku)
+  * [Bugs and Testing](#bugs-and-testing)
+  * [Libraries Used](#libraries-used)
+  * [Constraints and other issues](#constraints-and-other-issues)
+  * [Flow Chart](#flow-chart)
+  * [Acknowledgements](#acknowledgements)
+  * [Other Notes](#other-notes)
 
 ## Project Goals
 
@@ -238,6 +262,10 @@ This is a flow chart that I used to help design the program. It might be messy a
 - https://thispointer.com/python-pandas-select-rows-in-dataframe-by-conditions-on-multiple-columns/
 
 - https://www.askpython.com/python-modules/pandas/update-the-value-of-a-row-dataframe
+
+- https://ecotrust-canada.github.io/markdown-toc/ - Table of contents generator
+
+- My wonderful mentor Malia for helping me through this project :)
 
 
 ## Other Notes
