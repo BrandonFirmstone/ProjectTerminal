@@ -52,7 +52,7 @@ class Job:
             self.status = STATUSES[status]
         else:
             self.status = self.get_status()
-        if description and len(description) <= 30 and len(description) > 0:
+        if description and len(description) <= 50 and len(description) > 0:
             self.description = description
         else:
             self.description = self.get_description()
@@ -81,7 +81,7 @@ class Job:
         user_selection = None
         while user_selection is None:
             user_selection = input("Please enter a description. 50 Characters or less.\n").strip().capitalize()  # noqa
-            if len(user_selection) >= 4 or len(user_selection) <= 50:
+            if len(user_selection) >= 4 and len(user_selection) <= 50 and user_selection != None:
                 pass
             else:
                 print("Please type a valid description")
@@ -208,7 +208,7 @@ def job_selection():
     job_selection: Used to display all jobs to a user and return the user's selection.     #  noqa
     Checks to ensure the user's selection is within the all_jobs dataframe.  #  noqa
     '''
-    all_jobs = get_all_jobs()
+    all_jobs = pd.read_csv("jobs.csv")
     index_selected = None
     while (index_selected in all_jobs.index) is False:
         print(all_jobs.to_string())
